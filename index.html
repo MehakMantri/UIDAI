@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadhaar Card Upload</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="assets/logo.png" alt="Government Logo" class="logo">
+            <img src="assets/aadhaar.png" alt="Aadhaar" class="aadhaar-logo">
+        </div>
+    </header>
+    <nav class="navbar">
+        <ul>
+            <li>My Aadhaar</li>
+            <li>About UIDAI</li>
+            <li>Ecosystem</li>
+            <li>Media & Resources</li>
+            <li>Contact & Support</li>
+        </ul>
+    </nav>
+    <section class="main-banner">
+        <div class="banner-content">
+            <h2>Please upload your Aadhaar for continued accuracy of demographic information</h2>
+            <p>To update it, upload your proof of identity and proof of address documents.</p>
+        </div>
+    </section>
+
+    <section class="upload-section">
+        <h3>Upload Aadhaar Card</h3>
+        <input type="file" id="fileInput" accept="image/*,application/pdf" required />
+        <button id="uploadButton" class="upload-btn">Upload Aadhaar</button>
+    </section>
+
+    <div id="overlay"></div>
+    <div id="popup">
+        <h2>Potential Threats</h2>
+        <ul id="threatsList"></ul>
+        <button onclick="closePopup()" class="upload-btn">Close</button>
+    </div>
+
+    <div id="loading">
+        <h2>Scanning and Analyzing...</h2>
+        <p>Please wait while we check for potential threats.</p>
+        <p>Loading</p>
+        <!-- <img src="assets/loading.gif" alt="Loading" /> -->
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Unique Identification Authority of India</p>
+    </footer>
+
+    <script>
+        const allThreats = [
+            "Identity theft",
+            "Financial fraud",
+            "Phishing attacks",
+            "Unauthorized access to accounts",
+            "Data breaches",
+            "Social engineering attacks",
+            "Targeted harassment",
+            "Reputational damage",
+            "Account takeover",
+            "Malware infections",
+            "Doxxing",
+            "Credit card fraud",
+            "Fake identity creation",
+            "Privacy invasion",
+            "Cyberstalking"
+        ];
+
+        document.getElementById('uploadButton').addEventListener('click', () => {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select a file to upload.");
+                return;
+            }
+
+            // Show loading animation
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+
+            // Simulate scanning and analyzing
+            setTimeout(() => {
+                // Get a random selection of threats
+                const threats = getRandomThreats(allThreats, 5); // Get 5 random threats
+
+                // Hide loading animation
+                document.getElementById('loading').style.display = 'none';
+
+                // Display the threats
+                displayPopup(threats);
+            }, 3000); // Simulate a 3-second delay for scanning
+        });
+
+        function getRandomThreats(threats, count) {
+            // Shuffle the threats array
+            const shuffled = threats.sort(() => 0.5 - Math.random());
+            // Return the first 'count' threats
+            return shuffled.slice(0, count);
+        }
+
+        function displayPopup(threats) {
+            const threatsList = document.getElementById('threatsList');
+            threatsList.innerHTML = ''; // Clear previous threats
+
+            threats.forEach(threat => {
+                const li = document.createElement('li');
+                li.textContent = threat;
+                threatsList.appendChild(li);
+            });
+
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
